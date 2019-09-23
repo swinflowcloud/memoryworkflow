@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>工作流流程设计工具</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <link rel="shortcut icon" href="favicon.ico"/>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="plugins/bootstrap-3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugins/jstree/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="plugins/jqueryui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="plugins/timepicker/timepicker.css"/>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="plugins/jquery-2.1.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="plugins/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="plugins/jqueryui/jquery-ui.min.js"></script>
+    <!-- CEditor plugin -->
+    <script src="plugins/ckeditor_4.10.0_full/ckeditor/ckeditor.js"></script>
+    <!-- JSTree plugin -->
+    <script src="plugins/jstree/jstree.js"></script>
+    <!-- jQuery Date time picker plugin -->
+    <script src="plugins/timepicker/jquery-ui-timepicker-addon.js"></script>
+    <script src="plugins/timepicker/jquery-ui-timepicker-zh-CN.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/common/basic.js"></script>
+    <script src="js/common/utils.js"></script>
+    <script src="js/common/data/data_zh.js"></script>
+    <script src="js/common/ui/statusbar.js"></script>
+    <script src="js/common/ui/progressbar.js"></script>
+    <script src="js/common/ui/buildtimeutils.js"></script>
+    <script src="js/common/ui/runtimeutils.js"></script>
+    <script src="js/common/ui/alertbox.js"></script>
+    <script src="js/common/ui/confirmdialog.js"></script>
+    <script src="js/common/ui/messagedialog.js"></script>
+    <script src="js/common/ui/renamedialog.js"></script>
+    <script src="js/common/ui/approvallogpane.js"></script>
+    <script src="js/common/ui/treeview.js"></script>
+    <script src="js/common/ui/mcplugin.js"></script>
+    <script src="js/common/ui/mainmenubar.js"></script>
+
+    <script src="js/pm/tasks/wfprocess.js"></script>
+    <script src="js/pm/tasks/releasedwfprocess.js"></script>
+    <script src="js/pm/tasks/abstracttask.js"></script>
+    <script src="js/pm/tasks/startpoint.js"></script>
+    <script src="js/pm/tasks/endpoint.js"></script>
+    <script src="js/pm/tasks/assigntask.js"></script>
+    <script src="js/pm/tasks/manualtask.js"></script>
+    <script src="js/pm/tasks/subprocesspoint.js"></script>
+    <script src="js/pm/tasks/systemtask.js"></script>
+    <script src="js/pm/tasks/waitingtask.js"></script>
+    <script src="js/pm/tasks/transition.js"></script>
+    <script src="js/pm/tasks/assignment.js"></script>
+    <script src="js/pm/tasks/tasktextlabel.js"></script>
+    <script src="js/pm/tasks/emailreceiving.js"></script>
+    <script src="js/pm/tasks/emailsending.js"></script>
+    <script src="js/pm/tasks/smsreceiving.js"></script>
+    <script src="js/pm/tasks/smssending.js"></script>
+    <script src="js/pm/tasks/accessiblevariable.js"></script>
+    <script src="js/pm/tasks/participant.js"></script>
+    <script src="js/pm/tasks/messagereceiver.js"></script>
+
+    <script src="js/pm/models/knowledgepage.js"></script>
+    <script src="js/pm/models/wfprocessinstance.js"></script>
+    <script src="js/pm/models/assigntaskinstance.js"></script>
+    <script src="js/pm/models/emailreceivinginstance.js"></script>
+    <script src="js/pm/models/emailsendinginstance.js"></script>
+    <script src="js/pm/models/endpointinstance.js"></script>
+    <script src="js/pm/models/manualtaskinstance.js"></script>
+    <script src="js/pm/models/smsreceivinginstance.js"></script>
+    <script src="js/pm/models/smssendinginstance.js"></script>
+    <script src="js/pm/models/startpointinstance.js"></script>
+    <script src="js/pm/models/subprocesspointinstance.js"></script>
+    <script src="js/pm/models/systemtaskinstance.js"></script>
+    <script src="js/pm/models/transitioninstance.js"></script>
+    <script src="js/pm/models/waitingtaskinstance.js"></script>
+
+    <script src="js/pm/data/constant.js"></script>
+    <script src="js/pm/data/datavariable.js"></script>
+    <script src="js/pm/data/arrayvariable.js"></script>
+    <script src="js/pm/data/expression.js"></script>
+    <script src="js/pm/data/parameter.js"></script>
+    <script src="js/pm/data/boolconstant.js"></script>
+    <script src="js/pm/data/intconstant.js"></script>
+    <script src="js/pm/data/doubleconstant.js"></script>
+    <script src="js/pm/data/strconstant.js"></script>
+    <script src="js/pm/data/datetimeconstant.js"></script>
+    <script src="js/pm/data/fileconstant.js"></script>
+    <script src="js/pm/data/handwritingconstant.js"></script>
+    <script src="js/pm/data/jsonconstant.js"></script>
+    <script src="js/pm/data/timdurationconstant.js"></script>
+    <script src="js/pm/data/function.js"></script>
+
+    <script src="js/pm/editors/accesstypeselectcelleditor.js"></script>
+    <script src="js/pm/editors/proctypeselectcelleditor.js"></script>
+    <script src="js/pm/editors/textareacelleditor.js"></script>
+    <script src="js/pm/editors/textcelleditor.js"></script>
+    <script src="js/pm/editors/yesnocelleditor.js"></script>
+    <script src="js/pm/editors/wftypeselectcelleditor.js"></script>
+    <script src="js/pm/editors/pricecelleditor.js"></script>
+    <script src="js/pm/editors/processnamecelleditor.js"></script>
+    <script src="js/pm/editors/trialselectcelleditor.js"></script>
+    <script src="js/pm/editors/basicvaluecelleditor.js"></script>
+    <script src="js/pm/editors/boolvaluecelleditor.js"></script>
+    <script src="js/pm/editors/longtextvaluecelleditor.js"></script>
+    <script src="js/pm/editors/datetimecelleditor.js"></script>
+    <script src="js/pm/editors/datecelleditor.js"></script>
+    <script src="js/pm/editors/timecelleditor.js"></script>
+    <script src="js/pm/editors/durationcelleditor.js"></script>
+    <script src="js/pm/editors/filecelleditor.js"></script>
+
+    <script src="js/pm/dlg/ruleeditmodaldialog.js"></script>
+    <script src="js/pm/dlg/constanteditdialog.js"></script>
+    <script src="js/pm/dlg/datavariableeditdialog.js"></script>
+    <script src="js/pm/dlg/assignmenteditdialog.js"></script>
+    <script src="js/pm/dlg/createmodeldialog.js"></script>
+    <script src="js/pm/dlg/accessiblevareditdialog.js"></script>
+    <script src="js/pm/dlg/participanteditdialog.js"></script>
+    <script src="js/pm/dlg/receivereditdialog.js"></script>
+    <script src="js/pm/dlg/releaseprocessdialog.js"></script>
+    <script src="js/pm/dlg/appstoredialog.js"></script>
+    <script src="js/pm/dlg/processstoredialog.js"></script>
+    <script src="js/pm/dlg/buyhiredialog.js"></script>
+    <script src="js/pm/dlg/formstoredialog.js"></script>
+    <script src="js/pm/dlg/constantdialog.js"></script>
+    <script src="js/pm/dlg/moveprocessdialog.js"></script>
+    <script src="js/pm/dlg/copyprocessdialog.js"></script>
+    <script src="js/pm/dlg/setemailtemplatedialog.js"></script>
+    <script src="js/pm/dlg/variableselectdialog.js"></script>
+
+    <script src="js/pm/pane/ruleeditpanel.js"></script>
+    <script src="js/pm/pane/navigationeditpanel.js"></script>
+    <script src="js/pm/pane/routerorderpanel.js"></script>
+    <script src="js/pm/pane/processeditpanel.js"></script>
+    <script src="js/pm/pane/waitingtaskeditpanel.js"></script>
+    <script src="js/pm/pane/assignmenteditpanel.js"></script>
+    <script src="js/pm/pane/cadidatesettingpane.js"></script>
+    <script src="js/pm/pane/manualtaskeditpanel.js"></script>
+    <script src="js/pm/pane/systemtaskeditpanel.js"></script>
+    <script src="js/pm/pane/subprocesseditpanel.js"></script>
+    <script src="js/pm/pane/blankeditpanel.js"></script>
+    <script src="js/pm/pane/accessiblevariablespane.js"></script>
+    <script src="js/pm/pane/clientuisettingpane.js"></script>
+    <script src="js/pm/pane/deadlinesettingpane.js"></script>
+    <script src="js/pm/pane/paticipantspane.js"></script>
+    <script src="js/pm/pane/smssendingtaskeditpanel.js"></script>
+    <script src="js/pm/pane/smsreceiverspane.js"></script>
+    <script src="js/pm/pane/smstemplatesettingpane.js"></script>
+    <script src="js/pm/pane/emailsendingtaskeditpanel.js"></script>
+    <script src="js/pm/pane/emailreceiverspane.js"></script>
+    <script src="js/pm/pane/emailtemplatesettingpane.js"></script>
+    <script src="js/pm/pane/startpointeditpanel.js"></script>
+    <script src="js/pm/pane/endpointeditpanel.js"></script>
+    <script src="js/pm/pane/pointuieditpane.js"></script>
+    <script src="js/pm/pane/exprinitvaleditpane.js"></script>
+    <script src="js/pm/pane/aryinitvaleditpane.js"></script>
+    <script src="js/pm/pane/sppropeditpane.js"></script>
+    <script src="js/pm/pane/constanteditpane.js"></script>
+    <script src="js/pm/pane/rlprocessproppanel.js"></script>
+    <script src="js/pm/pane/appprocessiconpane.js"></script>
+
+    <script src="js/pm/pmpublisheditor.js"></script>
+    <script src="js/pm/pmservice.js"></script>
+    <script src="js/pm/pmundoredo.js"></script>
+    <script src="js/pm/pmprocessditor.js"></script>
+    <script src="js/pm/pmrlprocessditor.js"></script>
+    <script src="js/pm/basicpropertysheet.js"></script>
+    <script src="js/pm/propertysheet.js"></script>
+    <script src="js/pm/pmmaincontent.js"></script>
+
+    <style type="text/css">
+        .col {
+            float: left;
+            position: relative;
+            min-height: 1px;
+        }
+    </style>
+</head>
+<body id="managerbody">
+
+</body>
+<script>
+    var otherComponents = [
+    	{name: "建模工具", url: "index.html"},
+    	{name: "监控工具", url: "admin.html"}
+    ];
+
+    var service = new PMService();
+    var managerbody = document.getElementById("managerbody");
+    var menuBar = null;
+    if ($(managerbody).mainMenuBar != undefined) {
+        var menu = $(managerbody).mainMenuBar({
+            title: "工作流管理系统",
+            greeting: "您好，工作流用户",
+            userName: "工作流用户",
+            userId: "00001",
+            sessionId: "XXXX",
+            owner:"000001",
+            mopt: [1, 1, 0],
+            websocket: "",
+            imgUrl:""
+        });
+        menuBar = menu.data("mainMenuBar");
+    }
+    var maincontent = $(managerbody).mainContent({
+        id: "001",
+        uid: "000001",
+        uname: "工作流用户",
+    });
+    var main = maincontent.data("mainContent");
+    menuBar.setManager(main);
+    main.menubar = menuBar;
+    $(managerbody).statusBar({
+        title: "状态条",
+    });
+
+    var userId = "000001";
+    if (typeof (Storage) !== "undefined") {
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("currtab" + userId, "pm");
+        document.addEventListener("visibilitychange", function () {
+            if (document.visibilityState == "visible") {
+                localStorage.setItem("currtab" + userId, "pm");
+            }
+        })
+    }
+</script>
+</html>
+
