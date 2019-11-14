@@ -176,6 +176,13 @@
 	};
 
 	NavigationRulePanel.prototype.setTransition = function(transition, owner) {
+        if (transition.source.outputs.length != undefined &&
+			transition.source.outputs.length < 2) {
+            this.navigationEditButton.disabled = true;
+            this.radioOption.disabled = true;
+            this.radioOption1.disabled = true;
+            return;
+        }
 		if ((transition.source.isParallelOutput != undefined && transition.source.isParallelOutput == true)
 				|| (transition.target.isParallelInput != undefined && transition.target.isParallelInput == true)) {
 			this.navigationEditButton.disabled = true;
