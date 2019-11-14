@@ -831,7 +831,7 @@
                     this.transition.y0 = Math.floor((a.y0 + a.y1) / 2) + 0.5;
                 }
             } else {
-                if (!this.existed(this.transition, a)) {
+                if (!this.existed(this.transition, a)) {// 不存在相同弧，那么就画
                     if (a != null) {
                         var part = this.addTransition(mouse, a);
                         this.doCreationAction(part);
@@ -855,6 +855,9 @@
 
     Editor.prototype.existed = function (transition, selectedTarget) {
         var s = transition.source;
+        if (s.id == selectedTarget.id) {
+            return false;
+        }
         for (i = 0; i < s.outputs.length; i++) {
             if (s.outputs[i].target.id == selectedTarget.id) {
                 return true;
