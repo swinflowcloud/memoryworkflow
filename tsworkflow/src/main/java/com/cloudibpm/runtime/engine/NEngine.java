@@ -1,12 +1,12 @@
 /**
  * Copyright 2008-2019 Dahai Cao
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,10 +58,8 @@ public class NEngine implements Serializable, EventLog {
      * 这个方法导航一个任务的后续变迁实例以及任务实例，并计算哪些后续任务实例可被激活，
      * 激活的自动任务实例放在自动任务实例队列中，激活的非自动任务放在非自动任务实例中。
      *
-     * @param task
-     *            AbstractTask
-     * @param pengine
-     *            PEngine
+     * @param task    AbstractTask
+     * @param pengine PEngine
      * @return
      * @throws Exception
      * @date 2011-8-17 下午01:17:19; last upadated on 2018-01-30, 2018-02-28;
@@ -85,10 +83,18 @@ public class NEngine implements Serializable, EventLog {
             if (outputs.length == 0)
                 return true;
             Collections.sort(Arrays.asList(outputs), new TransitionComparator());
-            for (Transition output : outputs) {
-                calculateOutputTransitionStatus(output, pengine);
-                if (output.getStatus() == Transition.ENABLED) {
-                    // 找到第一个enabled transition就执行。
+            if (outputs.length > 1) {
+                for (Transition output : outputs) {
+                    calculateOutputTransitionStatus(output, pengine);
+                    if (output.getStatus() == Transition.ENABLED) {
+                        // 找到第一个enabled transition就执行。
+                        calculateTargetTaskStatus((AbstractTask) output.getTarget(), pengine);
+                        break;
+                    }
+                }
+            } else {
+                // if task has only one output, execute it directly.
+                for (Transition output : outputs) {
                     calculateTargetTaskStatus((AbstractTask) output.getTarget(), pengine);
                     break;
                 }
@@ -100,10 +106,8 @@ public class NEngine implements Serializable, EventLog {
     /**
      * 这个方法用于计算后续任务的状态。并更新后续任务的状态
      *
-     * @param target
-     *            AbstractTask
-     * @param pengine
-     *            PEngine
+     * @param target  AbstractTask
+     * @param pengine PEngine
      * @throws InterruptedException
      * @date 2011-8-17 下午01:17:19; last upadated on 2018-01-30, 2018-02-28;
      */
@@ -234,10 +238,8 @@ public class NEngine implements Serializable, EventLog {
     /**
      * 这个方法用于回滚操作，等设计回滚或异常操作时候，再改它。
      *
-     * @param task
-     *            AbstractTask
-     * @param pengine
-     *            PEngine
+     * @param task    AbstractTask
+     * @param pengine PEngine
      * @return
      * @throws Exception
      */
@@ -299,14 +301,11 @@ public class NEngine implements Serializable, EventLog {
      * Handle input transitions of current task. This method is same as
      * navigateInputsForMultipleSteping(AbstractTask task);
      *
-     * @author Dahai Cao lastupdated on 2018-03-07
-     *
-     * @param task
-     *            AbstractTask
-     * @param pengine
-     *            PEngine
+     * @param task    AbstractTask
+     * @param pengine PEngine
      * @return
      * @throws Exception
+     * @author Dahai Cao lastupdated on 2018-03-07
      */
     public boolean changeInputStatusForward(AbstractTask task, PEngine pengine) throws Exception {
         Transition[] inputs = task.getInputs();
@@ -355,10 +354,8 @@ public class NEngine implements Serializable, EventLog {
     /**
      * 这个方法用于计算后续任务的变迁的状态。并更新变迁的状态
      *
-     * @param output
-     *            Transition
-     * @param pengine
-     *            PEngine
+     * @param output  Transition
+     * @param pengine PEngine
      * @throws Exception
      * @date 2011-8-17 下午01:17:19; last upadated on 2018-01-30, 2018-02-28;
      */
@@ -389,12 +386,9 @@ public class NEngine implements Serializable, EventLog {
     /**
      * 跟新任务实例的状态
      *
-     * @param t
-     *            AbstractTask
-     * @param status
-     *            int
-     * @param inst
-     *            WfProcessInstance
+     * @param t      AbstractTask
+     * @param status int
+     * @param inst   WfProcessInstance
      */
     private void updateTaskInstanceStatus(AbstractTask t, int status, WfProcessInstance inst) {
         t.setStatus(status);
@@ -420,12 +414,9 @@ public class NEngine implements Serializable, EventLog {
     /**
      * 更新变迁实例的状态
      *
-     * @param t
-     *            Transition
-     * @param status
-     *            int
-     * @param inst
-     *            WfProcessInstance
+     * @param t      Transition
+     * @param status int
+     * @param inst   WfProcessInstance
      */
     private void updateTransitionInstanceStatus(Transition t, int status, WfProcessInstance inst) {
         t.setStatus(status);
