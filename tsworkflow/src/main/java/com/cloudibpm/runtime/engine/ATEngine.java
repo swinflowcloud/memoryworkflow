@@ -45,8 +45,9 @@ public class ATEngine implements Callable<AbstractTaskTransaction<?>>, EventLog 
 	private long threadId = -1;
 
 	/**
-	 * 
-	 * @param task
+	 *
+	 * @param transaction
+	 * @param pengine
 	 */
 	public ATEngine(AbstractTaskTransaction<?> transaction, PEngine pengine) {
 		this.taskTransaction = transaction;

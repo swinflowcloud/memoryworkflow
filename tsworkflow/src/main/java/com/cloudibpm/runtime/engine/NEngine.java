@@ -83,20 +83,27 @@ public class NEngine implements Serializable, EventLog {
             if (outputs.length == 0)
                 return true;
             Collections.sort(Arrays.asList(outputs), new TransitionComparator());
-            if (outputs.length > 1) {
+            if (outputs.length > 0) {
+                boolean hasEnabled = false;
                 for (Transition output : outputs) {
                     calculateOutputTransitionStatus(output, pengine);
                     if (output.getStatus() == Transition.ENABLED) {
                         // 找到第一个enabled transition就执行。
                         calculateTargetTaskStatus((AbstractTask) output.getTarget(), pengine);
+                        hasEnabled = true;
                         break;
                     }
                 }
-            } else {
-                // if task has only one output, execute it directly.
-                for (Transition output : outputs) {
-                    calculateTargetTaskStatus((AbstractTask) output.getTarget(), pengine);
-                    break;
+                if (!hasEnabled) {
+                    // if process can not be executed as normal but it is still correct,
+                    // so the current task will be put the enabled queue again to avoid
+                    // the work item is invisible to any one.
+                    if (task instanceof ManualTaskInstance) {
+                        handleManualTaskInstanceForward((ManualTaskInstance) task, pengine);
+                    } else {
+                        updateTaskInstanceStatus(task, AbstractTask.ENABLED, pengine.getInstance());
+                        pengine.getTaskQueues().putEnabledAutoTask(task);
+                    }
                 }
             }
         }

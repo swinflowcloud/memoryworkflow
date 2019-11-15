@@ -118,7 +118,7 @@ public class ProcessInstanceCompletionChecker implements Serializable {
 	/**
 	 * Returns whether the current process completed.
 	 * 
-	 * @param pengine
+	 * @param engine
 	 *            PEngine
 	 * @return
 	 * @throws InterruptedException
