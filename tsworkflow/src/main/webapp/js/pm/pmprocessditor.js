@@ -855,8 +855,8 @@
 
     Editor.prototype.existed = function (transition, selectedTarget) {
         var s = transition.source;
-        if (s.id == selectedTarget.id) {
-            return false;
+        if (selectedTarget != null && s.id == selectedTarget.id) {
+            return true; // prevent self-related. if codes have been optimized, release it
         }
         for (i = 0; i < s.outputs.length; i++) {
             if (s.outputs[i].target.id == selectedTarget.id) {
