@@ -289,6 +289,15 @@ WfProcess.prototype.seekChildByID = function(id) {
 		if (this.children[i].id == id) {
 			return this.children[i];
 		}
+        if (this.children[i] instanceof AbstractTask) {
+            if (this.children[i].hasOutputs()) {
+                for (var j = 0; j < this.children[i].outputs.length; j++) {
+                    if (id == this.children[i].outputs[j].id) {
+                        return this.children[i].outputs[j];
+                    }
+                }
+            }
+        }
 		if (this.children[i] instanceof AssignTask) {
 			for (var j = 0; j < this.children[i].assignments.length; j++) {
 				if (this.children[i].assignments[j].id == id) {

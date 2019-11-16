@@ -87,7 +87,7 @@
 		this.orderListSelect.setAttribute("size", "10");
 		this.orderListSelect.className = "form-control";
 		this.orderListSelect.style.width = "100%";
-		this.orderListSelect.addEventListener("change", this, false);
+		this.orderListSelect.addEventListener("click", this, false);
 
 		routeOrderListDiv.appendChild(this.orderListSelect);
 
@@ -106,6 +106,39 @@
 	};
 
 	RouteOrderEditPanel.prototype.doClick = function(evt) {
+        if (evt.target.tagName == "OPTION") {
+            if (this.orderListSelect.options.length > 1) {
+                if (this.orderListSelect.selectedIndex == 0) {
+                    this.upButton.setAttribute("disabled", "true");
+                    this.downButton.removeAttribute("disabled");
+                } else if (this.orderListSelect.selectedIndex == this.orderListSelect.options.length - 1) {
+                    this.upButton.removeAttribute("disabled");
+                    this.downButton.setAttribute("disabled", "true");
+                } else {
+                    this.upButton.removeAttribute("disabled");
+                    this.downButton.removeAttribute("disabled");
+                }
+                if (map[this.options.currOwner.id] != undefined &&
+                    map[this.options.currOwner.id] != null) {
+                    var a = this.options.currOwner.seekChildByID(this.orderListSelect.value);
+                    if (a != null) {
+                        map[this.options.currOwner.id].disableSelectedObjects();
+                        a.selected = true;
+                        map[this.options.currOwner.id].dropinSelected(a);
+                        map[this.options.currOwner.id].editorStatus = 1;
+                        map[this.options.currOwner.id].setButtonStatus(this.editorStatus);
+                        map[this.options.currOwner.id].repaint();
+                    }
+                }
+            } else {
+                this.upButton.setAttribute("disabled", "true");
+                this.downButton.setAttribute("disabled", "true");
+            }
+
+
+            return;
+        }
+
 		if (evt.target == this.upButton
 				|| (evt.target.tagName == "SPAN" && evt.target.id == "upButton"
 						+ this.options.id)) { // up button
@@ -171,23 +204,6 @@
 	};
 
 	RouteOrderEditPanel.prototype.doChange = function(evt) {
-		if (evt.target == this.orderListSelect) {
-			if (this.orderListSelect.options.length > 1) {
-				if (this.orderListSelect.selectedIndex == 0) {
-					this.upButton.setAttribute("disabled", "true");
-					this.downButton.removeAttribute("disabled");
-				} else if (this.orderListSelect.selectedIndex == this.orderListSelect.options.length - 1) {
-					this.upButton.removeAttribute("disabled");
-					this.downButton.setAttribute("disabled", "true");
-				} else {
-					this.upButton.removeAttribute("disabled");
-					this.downButton.removeAttribute("disabled");
-				}
-			} else {
-				this.upButton.setAttribute("disabled", "true");
-				this.downButton.setAttribute("disabled", "true");
-			}
-		}
 	};
 
 	$.fn[pluginName] = function(options) {
